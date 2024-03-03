@@ -1,7 +1,11 @@
 from django.shortcuts import render
-
+from rest_framework import viewsets
 # Create your views here.
-from django.http import HttpResponse
+from .models import chat_upload
+from .serializers import Uploadserializer
 
-def hello(request):
-    return HttpResponse("Hello world!")
+class UploadViewSet(viewsets.ModelViewSet):
+    queryset = chat_upload.objects.all()
+    serializer_class = Uploadserializer
+    
+
