@@ -4,5 +4,4 @@ from .models import chat_upload
 class Uploadserializer(serializers.ModelSerializer):
     class Meta:
         model = chat_upload
-        fields = ['__all__']
-
+        fields = '__all__'
