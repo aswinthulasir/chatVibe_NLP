@@ -7,6 +7,8 @@ from rest_framework import status
 from .models import chat_upload
 from .serializers import Uploadserializer
 
+def home(request):
+    return render(request, 'index.html')
 
 class UploadViewSet(viewsets.ModelViewSet):
     queryset = chat_upload.objects.all()
