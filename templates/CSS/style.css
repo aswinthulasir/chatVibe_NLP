@@ -1,0 +1,306 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+  body{
+    font-family: montserrat;
+  }
+  nav{
+    background: #075e54;
+    height: 80px;
+    width: 100%;
+  }
+  label.logo{
+    color: white;
+    font-size: 35px;
+    line-height: 80px;
+    padding: 0 100px;
+    font-weight: bold;
+  }
+  nav ul{
+    float: right;
+    margin-right: 20px;
+  }
+  nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+  }
+  nav ul li a{
+    color: white;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  a.active,a:hover{
+    background: #25d366;
+    transition: .5s;
+  }
+  .checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+  }
+  #check{
+    display: none;
+  }
+  @media (max-width: 952px){
+    label.logo{
+      font-size: 30px;
+      padding-left: 50px;
+    }
+    nav ul li a{
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 858px){
+    .checkbtn{
+      display: block;
+    }
+    ul{
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: #128c7e;
+      top: 80px;
+      left: -100%;
+      text-align: center;
+      transition: all .5s;
+    }
+    nav ul li{
+      display: block;
+      margin: 50px 0;
+      line-height: 30px;
+    }
+    nav ul li a{
+      font-size: 20px;
+    }
+    a:hover,a.active{
+      background: none;
+      color: #0082e6;
+    }
+    #check:checked ~ ul{
+      left: 0;
+    }
+  }
+  .primage {
+    position: relative;
+    width: 100%; /* or any other width you want */
+    height: 100vh; /* set the height of your section */
+    background-image: url('CSSP/full-shot-people-use-apps-make-friends.jpg'); /* replace 'your-image.jpg' with the path to your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+  }
+  .primage::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0,0, 0.65);
+
+
+  }
+
+  .pritext{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .pritext p{
+    font-size: 20px;
+    color: white;
+    opacity: 0.8;
+  }
+
+  .pritext button{
+    padding: 12px 22px;
+    margin-top: 30px;
+    font-size: 22px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #075e54;
+    border-radius: 25px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.5s;
+  }
+
+  .pritext button :hover{
+    opacity: 1;
+  }
+  
+
+  .steps-container {
+    margin: 20px;
+  }
+  
+  .step {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .gradient-section {
+    background: linear-gradient(#1ebea5, #00e676);
+    height: 120px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  
+  .email-container {
+    text-align: center;
+  }
+  
+  .email-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .email-container h2 {
+    margin-bottom: 10px;
+  }
+  footer{
+    margin-top: 50%;
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 600px) {
+    .steps-container {
+      margin: 10px;
+    }
+  
+    .step {
+      padding: 8px;
+    }
+  
+    .email-container {
+      padding: 10px;
+    }
+  }
+.authenticator{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+  .container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    margin: 0;
+
+  }
+  
+  .form-container {
+    padding: 20px;
+  }
+  
+  .form-toggle {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 8px;
+  }
+  
+  input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+
+  body.logimage {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('CSSP/men-showing-whatsapp-messenger-icon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .authenticator {
+    background-color: rgba(0, 0, 0, 0.65);
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .lo1{
+    display: block;
+
+    line-height: 30px;
+    width: 100px;
+    text-align: center;
+    border-radius: 5px;
+
+  }
+  .lo1:hover{
+    background-color: #45a049;
+  }
+  
+  body.helpimg {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('CSSP/front-view-late-phone-bad-habit-concept\ -\ Copy.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+  }
+
+  
