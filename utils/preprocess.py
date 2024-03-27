@@ -9,8 +9,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
-#import asyncio
-
+import time
 csv_file = 'data/dataset/text.csv'
 
 # Define a dictionary of chat word mappings
@@ -103,87 +102,98 @@ chat_words = {
     "BFF": "Best friends forever",
     "CSL": "Can't stop laughing"
 }
+# Function to replace chat words with their full forms
+def replace_chat_words(text):
+    words = text.split()
+    for i, word in enumerate(words):
+        if word.lower() in chat_words:
+            words[i] = chat_words[word.lower()]
+    return ' '.join(words)
 
-def pre(csv_file , chat_words):
-    #Opening the csv file
-    df = pd.read_csv(csv_file)
-    #Converting the text to lowercase
+#html tags removal function
+def remove_html_tags(text):
+        soup =  BeautifulSoup(text, 'html.parser')
+        return soup.get_text()
+# Define a function to remove URLs using regular expressions
+def remove_urls(text):
+        return re.sub(r'http\S+|www\S+', '', text)
+
+string.punctuation
+# Define the punctuation characters to remove
+punctuation = string.punctuation
+# Function to remove punctuation from text
+def remove_punctuation(text):
+    return text.translate(str.maketrans('', '', punctuation))
+
+# Get English stopwords from NLTK
+stop_words = set(stopwords.words('english'))
+# Function to remove stop words from text
+def remove_stopwords(text):
+    words = text.split()
+    filtered_words = [word for word in words if word.lower() not in stop_words]
+    return ' '.join(filtered_words)
+# Function to remove emojis from text
+def remove_emojis(text):
+    return emoji.demojize(text)
+
+def edit_text(df):
+     #Converting the text to lowercase
     df['text'] = df['text'].str.lower()
     #Removing the extra whitespaces
     df['text'] = df['text'].str.strip()
 
-
-    #html tags removal function
-    def remove_html_tags(text):
-            soup =  BeautifulSoup(text, 'html.parser')
-            return soup.get_text()
-
-    # Remove HTML tags from 'Text' column
+def removes(df):
+     # Remove HTML tags from 'Text' column
     df['text'] = df['text'].apply(remove_html_tags)
-
-
-    # Define a function to remove URLs using regular expressions
-    def remove_urls(text):
-            return re.sub(r'http\S+|www\S+', '', text)
 
     # Apply the function to the 'Text' column
     df['text'] = df['text'].apply(remove_urls)
 
-
-
-    string.punctuation
-    # Define the punctuation characters to remove
-    punctuation = string.punctuation
-    # Function to remove punctuation from text
-    def remove_punctuation(text):
-        return text.translate(str.maketrans('', '', punctuation))
-
     # Apply remove_punctuation function to 'Text' column
     df['text'] = df['text'].apply(remove_punctuation)
 
-
-    # Function to replace chat words with their full forms
-    def replace_chat_words(text):
-        words = text.split()
-        for i, word in enumerate(words):
-            if word.lower() in chat_words:
-                words[i] = chat_words[word.lower()]
-        return ' '.join(words)
-
-
+def replace_chatwords(df):
     # Apply replace_chat_words function to 'Text' column
     df['text'] = df['text'].apply(replace_chat_words)
 
-
-
-
-    # Get English stopwords from NLTK
-    stop_words = set(stopwords.words('english'))
-    # Function to remove stop words from text
-    def remove_stopwords(text):
-        words = text.split()
-        filtered_words = [word for word in words if word.lower() not in stop_words]
-        return ' '.join(filtered_words)
-
-    # Apply remove_stopwords function to 'Text' column
+def rem_stopwords(df):
+     # Apply remove_stopwords function to 'Text' column
     df['text'] = df['text'].apply(remove_stopwords)
 
-    # Function to remove emojis from text
-    def remove_emojis(text):
-        return emoji.demojize(text)
-    # Apply remove_emojis function to 'Text' column
+def rem_emojis(df):
+     # Apply remove_emojis function to 'Text' column
     df['text'] = df['text'].apply(remove_emojis)
 
+def stem(df):
     # Initialize the Porter Stemmer
     porter_stemmer = PorterStemmer()
     # Apply stemming
     df['Text_preprocess'] = df['text'].apply(lambda x: ' '.join([porter_stemmer.stem(word) for word in x.split()]))
+
+
+def lem(df):
     # Initialize the WordNet Lemmatizer
     lemmatizer = WordNetLemmatizer()
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
 
+
+     
+def pre(csv_file):
+    df = pd.read_csv(csv_file)
+    edit_text(df)
+    removes(df)
+    replace_chatwords(df)
+    rem_stopwords(df)
+    rem_emojis(df)
+    stem(df)
+    lem(df)
     return df
 
-data = pre(csv_file, chat_words)
-print(data.head())
+
+
+time1 = time.time()
+result = pre(csv_file)
+time2 = time.time()
+print(result)
+print("Time taken to preprocess the data: ", time2-time1, "seconds")
