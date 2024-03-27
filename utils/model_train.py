@@ -24,5 +24,6 @@ from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings('ignore')
 
-df = pd.read_csv('./Data/text.csv')
+
+df = pd.read_csv(r'C:\Users\NANDHANA ESBEE\Desktop\CHATViBE\chatvibe\data\dataset\text.csv')
 df.head()
