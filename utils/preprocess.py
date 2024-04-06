@@ -118,12 +118,12 @@ def remove_html_tags(text):
 def remove_urls(text):
         return re.sub(r'http\S+|www\S+', '', text)
 
-string.punctuation
-# Define the punctuation characters to remove
-punctuation = string.punctuation
-# Function to remove punctuation from text
-def remove_punctuation(text):
-    return text.translate(str.maketrans('', '', punctuation))
+#string.punctuation
+## Define the punctuation characters to remove
+#punctuation = string.punctuation
+## Function to remove punctuation from text
+#def remove_punctuation(text):
+#    return text.translate(str.maketrans('', '', punctuation))
 
 # Get English stopwords from NLTK
 stop_words = set(stopwords.words('english'))
@@ -136,13 +136,27 @@ def remove_stopwords(text):
 def remove_emojis(text):
     return emoji.demojize(text)
 
-def edit_text(df):
+
+def preprocess_text(csv_file):
+    df = pd.read_csv(csv_file)
+    # Define a dictionary to map numerical labels to corresponding emotions
+    label_map = {
+        0: 'Sadness',
+        1: 'Joy',
+        2: 'Love',
+        3: 'Anger',
+        4: 'Fear',
+        5: 'Surprise'
+    }
+
+    # Replace numerical labels with corresponding emotions in the 'Label' column
+    df['label'] = df['label'].map(label_map)
+
      #Converting the text to lowercase
     df['text'] = df['text'].str.lower()
     #Removing the extra whitespaces
-    df['text'] = df['text'].str.strip()
+    #df['text'] = df['text'].str.strip()
 
-def removes(df):
      # Remove HTML tags from 'Text' column
     df['text'] = df['text'].apply(remove_html_tags)
 
@@ -150,50 +164,34 @@ def removes(df):
     df['text'] = df['text'].apply(remove_urls)
 
     # Apply remove_punctuation function to 'Text' column
-    df['text'] = df['text'].apply(remove_punctuation)
+    #df['text'] = df['text'].apply(remove_punctuation)
 
-def replace_chatwords(df):
     # Apply replace_chat_words function to 'Text' column
     df['text'] = df['text'].apply(replace_chat_words)
 
-def rem_stopwords(df):
      # Apply remove_stopwords function to 'Text' column
     df['text'] = df['text'].apply(remove_stopwords)
 
-def rem_emojis(df):
      # Apply remove_emojis function to 'Text' column
     df['text'] = df['text'].apply(remove_emojis)
 
-def stem(df):
     # Initialize the Porter Stemmer
     porter_stemmer = PorterStemmer()
     # Apply stemming
     df['Text_preprocess'] = df['text'].apply(lambda x: ' '.join([porter_stemmer.stem(word) for word in x.split()]))
 
-
-def lem(df):
     # Initialize the WordNet Lemmatizer
     lemmatizer = WordNetLemmatizer()
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
+        
+    df.to_csv('data/dataset/preprocessed_text.csv', index=False)
 
-
-     
-def pre(csv_file):
-    df = pd.read_csv(csv_file)
-    edit_text(df)
-    removes(df)
-    replace_chatwords(df)
-    rem_stopwords(df)
-    rem_emojis(df)
-    stem(df)
-    lem(df)
     return df
 
-
-
+    
 time1 = time.time()
-result = pre(csv_file)
+result = preprocess_text(csv_file)
 time2 = time.time()
 print(result)
 print("Time taken to preprocess the data: ", time2-time1, "seconds")
