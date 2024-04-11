@@ -2,6 +2,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import re
 import string
+from keras.layers import TextVectorization
+import numpy as np 
 from nltk.corpus import stopwords
 import emoji
 from nltk.stem import PorterStemmer
@@ -139,6 +141,10 @@ def remove_emojis(text):
 
 def preprocess_text(csv_file):
     df = pd.read_csv(csv_file)
+    df = df.dropna()  # Drop rows with missing values
+    vectorizer = TextVectorization(max_tokens=1000,standardize="lower_and_strip_punctuation",split="whitespace",output_mode='int',\
+                                    output_sequence_length=20)
+
     # Define a dictionary to map numerical labels to corresponding emotions
     label_map = {
         0: 'Sadness',
@@ -184,8 +190,13 @@ def preprocess_text(csv_file):
     lemmatizer = WordNetLemmatizer()
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
-        
-    df.to_csv('data/dataset/preprocessed_text.csv', index=False)
+
+    # Fit the vectorizer on the texts
+    vectorizer.adapt(df['Text_preprocess']) 
+    # Convert texts to sequences of indices
+    df['Tokenized'] = vectorizer(df["Text_preprocess"]).numpy().tolist()
+  
+    df.to_csv('data/dataset/tokenized_text1.csv', index=False)
 
     return df
 
