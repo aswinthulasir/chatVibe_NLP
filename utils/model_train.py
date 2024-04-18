@@ -5,18 +5,19 @@ from sklearn.model_selection import train_test_split
 
 #import csv file
 import pandas as pd
-csv_file = 'data/dataset/text.csv'
+csv_file = 'data/dataset/tokenized_text1.csv'
 df = pd.read_csv(csv_file)
-X_train, X_test, y_train, y_test = train_test_split(df['text'], df['label'], test_size=0.2, random_state=42)
+#print(df.dtypes)
+X_train, X_test, y_train, y_test = train_test_split(df['Tokenized'], df['label'], test_size=0.2, random_state=42)
 
 # Initialize models
 model = Sequential()
 
 #add layers
-model.add(Embedding(input_dim=100, output_dim=64))
-model.add(LSTM(64, return_sequences=True))  
-model.add(LSTM(64))
-#model.add(Bidirectional(LSTM(64)))
+model.add(Embedding(input_dim=5000, output_dim=64))
+model.add(LSTM(64, return_sequences=False, input_shape=(20, 64)))  
+#model.add(LSTM(64))
+#model.add(Bidirectional(LSTM(64), input_shape=(20, 64)))
 model.add(Dense(1, activation='sigmoid'))
 
 # Compile the model
@@ -30,10 +31,10 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f"Test Accuracy: {test_acc:.4f}")
 
 #predict the model
-predict = model.predict()
+predict = model.predict(X_test)
 print(predict)
 
 # Print the model summary
-print(model.summary())
+# print(model.summary())
 # Save the model
 #model.save('model1.keras')
