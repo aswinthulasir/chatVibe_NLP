@@ -12,6 +12,11 @@ from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
 import time
+
+from keras.models import Sequential
+from keras.layers import Dense, LSTM , Embedding
+from sklearn.model_selection import train_test_split
+
 csv_file = 'data/dataset/text.csv'
 
 # Define a dictionary of chat word mappings
@@ -120,13 +125,6 @@ def remove_html_tags(text):
 def remove_urls(text):
         return re.sub(r'http\S+|www\S+', '', text)
 
-#string.punctuation
-## Define the punctuation characters to remove
-#punctuation = string.punctuation
-## Function to remove punctuation from text
-#def remove_punctuation(text):
-#    return text.translate(str.maketrans('', '', punctuation))
-
 # Get English stopwords from NLTK
 stop_words = set(stopwords.words('english'))
 # Function to remove stop words from text
@@ -142,8 +140,8 @@ def remove_emojis(text):
 def preprocess_text(csv_file):
     df = pd.read_csv(csv_file)
     df = df.dropna()  # Drop rows with missing values
-    vectorizer = TextVectorization(max_tokens=1000,standardize="lower_and_strip_punctuation",split="whitespace",output_mode='int',\
-                                    output_sequence_length=20)
+    vectorizer = TextVectorization(max_tokens=1000,standardize="lower_and_strip_punctuation",split="whitespace",\
+                                   output_sequence_length=20)
 
     # Define a dictionary to map numerical labels to corresponding emotions
     label_map = {
@@ -196,7 +194,22 @@ def preprocess_text(csv_file):
     # Convert texts to sequences of indices
     df['Tokenized'] = vectorizer(df["Text_preprocess"]).numpy().tolist()
   
-    df.to_csv('data/dataset/tokenized_text1.csv', index=False)
+    #df.to_csv('data/dataset/tokenized_text3.csv', index=False)
+
+    #model train
+    vocabulary_size = 1000
+    X_train, X_test, y_train, y_test = train_test_split(df['Tokenized'], df['label'], test_size=0.2, random_state=42)
+    model = Sequential()
+    model.add(Embedding(input_dim=vocabulary_size+1, output_dim=64))
+    model.add(LSTM(64))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.fit(X_train, y_train, epochs=10, batch_size=64)
+    test_loss, test_acc = model.evaluate(X_test, y_test)
+    predict = model.predict(X_test)
+    print(f"Test Accuracy: {test_acc:.4f}")
+    print(predict)
+
 
     return df
 

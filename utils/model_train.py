@@ -1,40 +1,55 @@
-from keras.models import Sequential
-from keras.layers import Dense, LSTM , Embedding,Bidirectional
 from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer  # Example feature extractor
+from sklearn.linear_model import LogisticRegression  # Example classifier
+from sklearn.ensemble import GradientBoostingClassifier
 
-
-#import csv file
 import pandas as pd
-csv_file = 'data/dataset/tokenized_text1.csv'
-df = pd.read_csv(csv_file)
-#print(df.dtypes)
-X_train, X_test, y_train, y_test = train_test_split(df['Tokenized'], df['label'], test_size=0.2, random_state=42)
 
-# Initialize models
-model = Sequential()
+df = pd.read_csv('data/dataset/text2.csv')
+df =df.dropna()
+# Load your data (replace with your data loading logic)
+X = df['Text_preprocess']
+# ["This is a positive sentiment sentence.",
+#      "This is a negative sentiment sentence.",
+#      "This is a neutral statement."]  # Sample text data
+y = df['label']
+#[1, 2, 0]  # Sample labels (1: positive, 0: negative)
 
-#add layers
-model.add(Embedding(input_dim=5000, output_dim=64))
-model.add(LSTM(64, return_sequences=False, input_shape=(20, 64)))  
-#model.add(LSTM(64))
-#model.add(Bidirectional(LSTM(64), input_shape=(20, 64)))
-model.add(Dense(1, activation='sigmoid'))
+# Split data into training and testing sets (optional, adjust test_size as needed)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=46)
 
-# Compile the model
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+# Feature extraction (using TF-IDF in this example)
+vectorizer = TfidfVectorizer(max_features=1000)  # Hyperparameter: number of features
+X_train_features = vectorizer.fit_transform(X_train)
+X_test_features = vectorizer.transform(X_test)
 
-#train the model
-model.fit(X_train, y_train, epochs=10, batch_size=32)
+# Model training (using Logistic Regression in this example)
+# Create the GradientBoostingClassifier model
+model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.05, max_depth=3)
 
-#evaluate the model
-test_loss, test_acc = model.evaluate(X_test, y_test)
-print(f"Test Accuracy: {test_acc:.4f}")
 
-#predict the model
-predict = model.predict(X_test)
-print(predict)
+# Train the model on the features and labels
+model.fit(X_train_features, y_train )
 
-# Print the model summary
-# print(model.summary())
-# Save the model
-#model.save('model1.keras')
+
+#model = LogisticRegression(solver='lbfgs')  # Choose appropriate solver
+#model.fit(X_train_features, y_train)
+
+# Model evaluation (using accuracy in this example)
+from sklearn.metrics import accuracy_score
+y_pred = model.predict(X_test_features)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Make predictions on new data (optional)
+# new_text = "I am feeling okay."
+# new_text_features = vectorizer.transform([new_text])
+# prediction = model.predict(new_text_features)
+# print("Predicted sentiment:", prediction[0])
+ 
+for item in df['text']:
+    new_text_features = vectorizer.transform([item])
+    prediction = model.predict(new_text_features)
+    print("Predicted sentiment:", prediction[0])
+    print(item)
+    print('------------------')
