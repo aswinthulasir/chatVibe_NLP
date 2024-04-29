@@ -4,6 +4,7 @@ from django.db import models
 class chat_upload(models.Model):
     chat_id = models.AutoField(primary_key=True)
     chat_file = models.FileField(upload_to='chat_files/', null=True, blank=True)
+    Name = models.CharField(max_length=100, null=True, blank=True)
     chat_startdate = models.DateField(null=True, blank=True)
     chat_starttime = models.TimeField(null=True, blank=True)
     chat_enddate = models.DateField(null=True, blank=True)
