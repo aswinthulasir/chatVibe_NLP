@@ -6,7 +6,7 @@ from rest_framework import status
 # Create your views here.
 from .models import chat_upload
 from .serializers import Uploadserializer
-
+from utils import data_preprocess,txt_csv,resultmodel
 def home(request):
     return render(request, 'index.html')
 
@@ -28,9 +28,14 @@ class UploadViewSet(viewsets.ModelViewSet):
 
     #returns emotion of the text    
     def list(self, request, *args, **kwargs):
-        queryset = request.data.get('chat_file')
-        serializer = Uploadserializer(queryset, many=True)
-        return Response(serializer.data)
+        input_file = request.data.get('chat_file')
+        if not input_file:
+            return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            data = txt_csv.csv_txt(input_file)
+            data = data_preprocess.preprocess_text(input_file)
+            data = resultmodel.emotionlabel(data)
+            return Response(data, status=status.HTTP_200_OK)
 
         
     

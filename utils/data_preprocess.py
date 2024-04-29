@@ -2,7 +2,6 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import re
 import string
-import numpy as np 
 from nltk.corpus import stopwords
 import emoji
 from nltk.stem import PorterStemmer
@@ -139,22 +138,9 @@ def remove_punctuation(text):
     no_punct = ''.join([char for char in text if char not in punctuations])
     return no_punct
 
-def preprocess_text(csv_file):
-    df = pd.read_csv(csv_file)
-    df = df.dropna()  # Drop rows with missing values
-
-    # Define a dictionary to map numerical labels to corresponding emotions
-    label_map = {
-        0: 'Sadness',
-        1: 'Joy',
-        2: 'Love',
-        3: 'Anger',
-        4: 'Fear',
-        5: 'Surprise'
-    }
-
-    # Replace numerical labels with corresponding emotions in the 'Label' column
-    df['label'] = df['label'].map(label_map)
+def preprocess_text(df):
+    #df = pd.read_csv(csv_file)
+    #df = df.dropna()  # Drop rows with missing values
 
      #Converting the text to lowercase
     df['text'] = df['text'].str.lower()
@@ -194,8 +180,8 @@ def preprocess_text(csv_file):
     return df
 
     
-time1 = time.time()
-result = preprocess_text(csv_file)
-time2 = time.time()
-print(result)
-print("Time taken to preprocess the data: ", time2-time1, "seconds")
+# time1 = time.time()
+# result = preprocess_text(csv_file)
+# time2 = time.time()
+# print(result)
+# print("Time taken to preprocess the data: ", time2-time1, "seconds")

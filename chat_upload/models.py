@@ -9,6 +9,7 @@ class chat_upload(models.Model):
     chat_starttime = models.TimeField(null=True, blank=True)
     chat_enddate = models.DateField(null=True, blank=True)
     chat_endtime = models.TimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.chat_id
