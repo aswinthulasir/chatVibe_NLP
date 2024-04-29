@@ -2,7 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer  # Example feature extractor
 from sklearn.linear_model import LogisticRegression  # Example classifier
 from sklearn.ensemble import GradientBoostingClassifier
-
+import time
 import pandas as pd
 
 df = pd.read_csv('data/dataset/text2.csv')
@@ -27,7 +27,7 @@ X_test_features = vectorizer.transform(X_test)
 # Create the GradientBoostingClassifier model
 model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.01, max_depth=3)
 
-
+time1 = time.time()
 # Train the model on the features and labels
 model.fit(X_train_features, y_train )
 
@@ -36,22 +36,6 @@ from sklearn.metrics import accuracy_score
 y_pred = model.predict(X_test_features)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
+time2 = time.time()
+print("Time taken:", time2 - time1)
 
-
-#model = LogisticRegression(solver='lbfgs')  # Choose appropriate solver
-#model.fit(X_train_features, y_train)
-
-
-
-# Make predictions on new data (optional)
-# new_text = "I am feeling okay."
-# new_text_features = vectorizer.transform([new_text])
-# prediction = model.predict(new_text_features)
-# print("Predicted sentiment:", prediction[0])
- 
-# for item in df['text']:
-#     new_text_features = vectorizer.transform([item])
-#     prediction = model.predict(new_text_features)
-#     print("Predicted sentiment:", prediction[0])
-#     print(item)
-#     print('------------------')
