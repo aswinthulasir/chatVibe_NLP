@@ -1,6 +1,7 @@
 
 import pandas as pd
-filename="data/ipdata/chat.txt"
+import os
+#filename="data/ipdata/chat.txt"
 
 def text_to_csv(filename):
     df=pd.read_csv(filename,header=None,on_bad_lines='warn',encoding='utf-8')
@@ -15,10 +16,11 @@ def text_to_csv(filename):
     df['Text']=Message1[1]
     df['Name']=Message1[0]
     df['Text']=df['Text'].str.lower()
-    print(df)
+    #print(df)
     df['Text'] = df['Text'].str.replace('<media omitted>','MediaShared')
     df['Text'] = df['Text'].str.replace('this message was deleted','DeletedMsg')    
     df =df.dropna()
+    os.remove(filename)
     return df
     # print(df)
     # df.to_csv("data/opdata/chat.csv",index=True)

@@ -1,4 +1,3 @@
-import pandas as pd
 from bs4 import BeautifulSoup
 import re
 import string
@@ -9,9 +8,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
-import time
 
-csv_file = 'data/dataset/text.csv'
 
 # Define a dictionary of chat word mappings
 chat_words = {
@@ -143,32 +140,32 @@ def preprocess_text(df):
     #df = df.dropna()  # Drop rows with missing values
 
      #Converting the text to lowercase
-    df['text'] = df['text'].str.lower()
+    df['Text'] = df['Text'].str.lower()
     #Removing the extra whitespaces
     #df['text'] = df['text'].str.strip()
 
      # Remove HTML tags from 'Text' column
-    df['text'] = df['text'].apply(remove_html_tags)
+    df['Text'] = df['Text'].apply(remove_html_tags)
 
     # Apply the function to the 'Text' column
-    df['text'] = df['text'].apply(remove_urls)
+    df['Text'] = df['Text'].apply(remove_urls)
 
     # Apply remove_punctuation function to 'Text' column
-    df['text'] = df['text'].apply(remove_punctuation)
+    df['Text'] = df['Text'].apply(remove_punctuation)
 
     # Apply replace_chat_words function to 'Text' column
-    df['text'] = df['text'].apply(replace_chat_words)
+    df['Text'] = df['Text'].apply(replace_chat_words)
 
      # Apply remove_stopwords function to 'Text' column
-    df['text'] = df['text'].apply(remove_stopwords)
+    df['Text'] = df['Text'].apply(remove_stopwords)
 
      # Apply remove_emojis function to 'Text' column
-    df['text'] = df['text'].apply(remove_emojis)
+    df['Text'] = df['Text'].apply(remove_emojis)
 
     # Initialize the Porter Stemmer
     porter_stemmer = PorterStemmer()
     # Apply stemming
-    df['Text_preprocess'] = df['text'].apply(lambda x: ' '.join([porter_stemmer.stem(word) for word in x.split()]))
+    df['Text_preprocess'] = df['Text'].apply(lambda x: ' '.join([porter_stemmer.stem(word) for word in x.split()]))
 
     # Initialize the WordNet Lemmatizer
     lemmatizer = WordNetLemmatizer()
@@ -176,12 +173,6 @@ def preprocess_text(df):
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
   
     #df.to_csv('data/dataset/tokenized_text3.csv', index=False)
-
+    #print(df)
     return df
 
-    
-# time1 = time.time()
-# result = preprocess_text(csv_file)
-# time2 = time.time()
-# print(result)
-# print("Time taken to preprocess the data: ", time2-time1, "seconds")
