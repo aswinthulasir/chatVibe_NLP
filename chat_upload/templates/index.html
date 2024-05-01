@@ -97,54 +97,49 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  // Get the form element
-  const form = document.querySelector('.time-input-form');
+      const form = document.getElementById('timeForm');
 
-  // Add event listener for form submission
-  form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission behavior
+      form.addEventListener('submit', function(event) {
+          event.preventDefault();
 
-    // Collect data from form fields
-    const fromDate = document.getElementById('fromDate').value;
-    const fromTime = document.getElementById('fromTime').value;
-    const ampm1 = document.getElementById('ampm1').value;
-    const toDate = document.getElementById('toDate').value;
-    const toTime = document.getElementById('toTime').value;
-    const ampm2 = document.getElementById('ampm2').value;
+          const fromDate = document.getElementById('fromDate').value;
+          const fromTime = document.getElementById('fromTime').value;
+          const ampm1 = document.getElementById('ampm1').value;
+          const toDate = document.getElementById('toDate').value;
+          const toTime = document.getElementById('toTime').value;
+          const ampm2 = document.getElementById('ampm2').value;
 
-    // Create a data object to send to the backend
-    const data = {
-      fromDate: fromDate,
-      fromTime: fromTime,
-      ampm1: ampm1,
-      toDate: toDate,
-      toTime: toTime,
-      ampm2: ampm2
-    };
+          // Collect file data
+          const fileInput = document.getElementById('fileInput');
+          const file = fileInput.files[0];
 
-    // Send a POST request to the backend
-    fetch('http://127.0.0.1:8000/home/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (response.ok) {
-        // Handle successful response
-        console.log('Data sent successfully');
-      } else {
-        // Handle error response
-        console.error('Failed to send data');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+          // Create form data object
+          const formData = new FormData();
+          formData.append('fromDate', fromDate);
+          formData.append('fromTime', fromTime);
+          formData.append('ampm1', ampm1);
+          formData.append('toDate', toDate);
+          formData.append('toTime', toTime);
+          formData.append('ampm2', ampm2);
+          formData.append('file', file);
+
+          // Send POST request to backend
+          fetch('http://127.0.0.1:8000/home/', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              if (response.ok) {
+                  console.log('Data sent successfully');
+              } else {
+                  console.error('Failed to send data');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      });
   });
-});
-
 </script>
 
 
