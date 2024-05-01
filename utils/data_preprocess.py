@@ -142,8 +142,6 @@ def preprocess_text(df):
     args: df (pandas DataFrame): dataframe from text_to_df function
     returns: df (pandas DataFrame): dataframe with preprocessed text
     '''
-    #df = pd.read_csv(csv_file)
-    #df = df.dropna()  # Drop rows with missing values
 
     # Apply remove_emojis function to 'Text' column
     df['Text'] = df['Text'].apply(remove_emojis)
