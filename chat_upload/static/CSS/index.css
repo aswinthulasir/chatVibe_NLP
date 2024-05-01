@@ -7,6 +7,7 @@
   }
   body{
     font-family: montserrat;
+    background-color: #000000;
   }
   nav{
     background: #075e54;
@@ -49,6 +50,7 @@
     margin-right: 40px;
     cursor: pointer;
     display: none;
+    
   }
   #check{
     display: none;
@@ -103,6 +105,7 @@
       max-width: 100%;
       height: calc(95vh - 30px); /* Adjust the navbar height */
       overflow: hidden;
+      
      
     }
     .slideshow-container img {
@@ -224,6 +227,8 @@
   
 }
 
+
+
 /* Style form elements */
 .time-input-form {
   display: flex;
@@ -282,5 +287,65 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 600px) {
+  .upload-overlay2 {
+    top: 50%; /* Adjust as needed */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000000; /* Change color to black on mobile */
+  }
+  
+  /* Style form elements */
+  .time-input-form {
+    display: flex;
+    flex-direction: column; /* Change to column layout on mobile */
+    padding: 20px;
+  }
+
+  .time-input-form label,
+  .time-input-form input,
+  .time-input-form select {
+    margin-bottom: 10px;
+    margin-left: 0; /* Remove left margin on mobile */
+    background-color: #ffffff00;
+    color: #ffffff;
+    border: none; 
+    outline: none;
+    width: 100%; /* Full width on mobile */
+  }
+
+  .time-input-form label {
+    font-size: large;
+    font-weight: 400;
+  }
+
+  .time-input-form input,
+  .time-input-form select {
+    padding: 10px;
+    box-sizing: border-box;
+    color: #ffffff;
+  }
+
+  .time-input-form option {
+    color: #000000; /* Set option text color to black */
+  }
+
+  .time-input-form input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Invert the color to white */
+  }
+  
+  .time-input-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Invert the color to white */
+  }
+}
 
 

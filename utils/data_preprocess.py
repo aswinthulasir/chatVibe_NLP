@@ -2,7 +2,6 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import re
 import string
-from keras.layers import TextVectorization
 import numpy as np 
 from nltk.corpus import stopwords
 import emoji
@@ -12,10 +11,6 @@ from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
 import time
-
-from keras.models import Sequential
-from keras.layers import Dense, LSTM , Embedding
-from sklearn.model_selection import train_test_split
 
 csv_file = 'data/dataset/text.csv'
 
@@ -136,12 +131,17 @@ def remove_stopwords(text):
 def remove_emojis(text):
     return emoji.demojize(text)
 
+# Define a string of punctuation symbols
+punctuations = string.punctuation
+# Function to remove punctuation from text
+def remove_punctuation(text):
+    # Replace all punctuation symbols with an empty string
+    no_punct = ''.join([char for char in text if char not in punctuations])
+    return no_punct
 
 def preprocess_text(csv_file):
     df = pd.read_csv(csv_file)
     df = df.dropna()  # Drop rows with missing values
-    vectorizer = TextVectorization(max_tokens=1000,standardize="lower_and_strip_punctuation",split="whitespace",\
-                                   output_sequence_length=20)
 
     # Define a dictionary to map numerical labels to corresponding emotions
     label_map = {
@@ -168,7 +168,7 @@ def preprocess_text(csv_file):
     df['text'] = df['text'].apply(remove_urls)
 
     # Apply remove_punctuation function to 'Text' column
-    #df['text'] = df['text'].apply(remove_punctuation)
+    df['text'] = df['text'].apply(remove_punctuation)
 
     # Apply replace_chat_words function to 'Text' column
     df['text'] = df['text'].apply(replace_chat_words)
@@ -188,28 +188,8 @@ def preprocess_text(csv_file):
     lemmatizer = WordNetLemmatizer()
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
-
-    # Fit the vectorizer on the texts
-    vectorizer.adapt(df['Text_preprocess']) 
-    # Convert texts to sequences of indices
-    df['Tokenized'] = vectorizer(df["Text_preprocess"]).numpy().tolist()
   
     #df.to_csv('data/dataset/tokenized_text3.csv', index=False)
-
-    #model train
-    vocabulary_size = 1000
-    X_train, X_test, y_train, y_test = train_test_split(df['Tokenized'], df['label'], test_size=0.2, random_state=42)
-    model = Sequential()
-    model.add(Embedding(input_dim=vocabulary_size+1, output_dim=64))
-    model.add(LSTM(64))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(X_train, y_train, epochs=10, batch_size=64)
-    test_loss, test_acc = model.evaluate(X_test, y_test)
-    predict = model.predict(X_test)
-    print(f"Test Accuracy: {test_acc:.4f}")
-    print(predict)
-
 
     return df
 

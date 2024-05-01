@@ -145,6 +145,12 @@
     display: flex;
     justify-content: space-between;
   }
+  
+  .icons a:hover{
+    transform: scale(1.3);
+    transition: 0.3s;
+  }
+
   .card a {
     text-decoration: none;
     color: inherit;

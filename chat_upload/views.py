@@ -26,6 +26,12 @@ class UploadViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+    #returns emotion of the text    
+    def list(self, request, *args, **kwargs):
+        queryset = request.data.get('chat_file')
+        serializer = Uploadserializer(queryset, many=True)
+        return Response(serializer.data)
+
         
     
 
