@@ -4,6 +4,10 @@ import os
 #filename="data/ipdata/chat.txt"
 
 def text_to_csv(filename):
+    '''
+    args: filename (str): path to the text file
+    returns: df (pandas DataFrame): dataframe of the text file
+    '''
     df=pd.read_csv(filename,header=None,on_bad_lines='warn',encoding='utf-8')
     encryption_pattern = r"Messages and calls are end-to-end"
     df = df.drop(df[df[1].str.contains(encryption_pattern)].index)

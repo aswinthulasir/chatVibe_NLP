@@ -138,6 +138,9 @@ def remove_punctuation(text):
 df = pd.read_csv('data/opdata/chat.csv')
 
 def preprocess_text(df):
+    '''
+    args: df (pandas DataFrame): dataframe of the text file
+    '''
     #df = pd.read_csv(csv_file)
     #df = df.dropna()  # Drop rows with missing values
 
