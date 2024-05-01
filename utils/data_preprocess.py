@@ -8,7 +8,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
-#import pandas as pd
+
 
 
 # Define a dictionary of chat word mappings
@@ -139,7 +139,8 @@ def remove_punctuation(text):
 
 def preprocess_text(df):
     '''
-    args: df (pandas DataFrame): dataframe of the text file
+    args: df (pandas DataFrame): dataframe from text_to_df function
+    returns: df (pandas DataFrame): dataframe with preprocessed text
     '''
     #df = pd.read_csv(csv_file)
     #df = df.dropna()  # Drop rows with missing values
@@ -176,7 +177,4 @@ def preprocess_text(df):
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
   
-    #df.to_csv('data/opdata/chat1.csv', index=False)
-   # print(df)
     return df
-#preprocess_text(df)

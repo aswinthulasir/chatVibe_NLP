@@ -31,12 +31,12 @@ class UploadViewSet(viewsets.ModelViewSet):
              return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             df = txt_df.text_to_df(file,Name,chat_startdate,chat_enddate)
-            #df1 = data_preprocess.preprocess_text(df)
+            df1 = data_preprocess.preprocess_text(df)
             #emotion = resultmodel.emotionlabel(df1)
 
             #delete table row
             queryset.delete()
-            return Response(df, status=status.HTTP_200_OK)
+            return Response(df1, status=status.HTTP_200_OK)
         
     
 
