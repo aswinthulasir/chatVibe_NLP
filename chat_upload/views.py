@@ -6,7 +6,7 @@ from rest_framework import status
 # Create your views here.
 from .models import chat_upload
 from .serializers import Uploadserializer
-
+from utils import data_preprocess,txt_csv,resultmodel
 def home(request):
     return render(request, 'index.html')
 
@@ -15,23 +15,25 @@ class UploadViewSet(viewsets.ModelViewSet):
     serializer_class = Uploadserializer
 
     def create(self, request, *args, **kwargs):
-        if not request.data.get('chat_file'):
-            return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)  # Validate data
-            self.perform_create(serializer)
-            headers = self.get_success_header(serializer.data)
-            return Response({"success": "File found"}, status=status.HTTP_201_CREATED, headers=headers)
-    def perform_create(self, serializer):
+        serializer = Uploadserializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
-
-    #returns emotion of the text    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     def list(self, request, *args, **kwargs):
-        queryset = request.data.get('chat_file')
-        serializer = Uploadserializer(queryset, many=True)
-        return Response(serializer.data)
+        queryset = chat_upload.objects.all()
+        input_file = queryset.values('chat_file')
+        file = input_file[0]['chat_file']
+        if not input_file:
+             return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            df = txt_csv.text_to_csv(file)
+            df1 = data_preprocess.preprocess_text(df)
+            emotion = resultmodel.emotionlabel(df1)
 
+            #delete table row
+            queryset.delete()
+            return Response(emotion, status=status.HTTP_200_OK)
         
     
 
