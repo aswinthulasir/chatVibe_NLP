@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>File Upload</h1>
+    <input type="file" id="fileUpload" accept=".txt">
+    <br>
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate">
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate">
+    <br>
+    <button onclick="uploadFile()">Upload</button>
+
+    <script>
+        function uploadFile() {
+            const file = document.getElementById('fileUpload').files[0];
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('fromDate', fromDate);
+            formData.append('toDate', toDate);
+
+            fetch('http://127.0.0.1:8000/home/upload/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+    </script>
+
+    
+</body>
+</html>
