@@ -56,90 +56,42 @@
   </div>
  
   <!-- Next and previous buttons -->
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  
 <div class="upload-overlay">
-    <button id="uploadButton">Upload Chat</button>
-    <input type="file" id="fileInput" accept=".txt" style="display: none;">
-</div>
+  <input type="file" id="fileUpload" accept=".txt">
+    
+
 <div class="upload-overlay2">
     <form class="time-input-form">
-      <label for="fromDate">From:</label>
-      <input type="date" id="fromDate" name="fromDate" required>
-
-      <label for="fromTime">Time:</label>
-      <input type="time" id="fromTime" name="fromTime" required>
-
-      <label for="ampm">AM/PM:</label>
-      <select id="ampm" name="ampm" required>
-        <option value="am">AM</option>
-        <option value="pm">PM</option>
-      </select>
-  
-      <label for="toDate">To:</label>
-      <input type="date" id="toDate" name="toDate" required>
-
-      <label for="toTime">Time:</label>
-      <input type="time" id="toTime" name="toTime" required>
-  
-      <label for="ampm">AM/PM:</label>
-      <select id="ampm" name="ampm" required>
-        <option value="am">AM</option>
-        <option value="pm">PM</option>
-      </select>
-  
-      <input type="submit" value="Submit">
-    </form>
-  </div>
-</div>
-
-
-
+      <label for="fromDate">From Date:</label>
+      <input type="date" id="fromDate">
+      <label for="toDate">To Date:</label>
+      <input type="date" id="toDate">
+      <br>
+      <button onclick="uploadFile()">Upload</button>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('timeForm');
+  function uploadFile() {
+            const file = document.getElementById('fileUpload').files[0];
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
 
-      form.addEventListener('submit', function(event) {
-          event.preventDefault();
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('fromDate', fromDate);
+            formData.append('toDate', toDate);
 
-          const fromDate = document.getElementById('fromDate').value;
-          const fromTime = document.getElementById('fromTime').value;
-          const ampm1 = document.getElementById('ampm1').value;
-          const toDate = document.getElementById('toDate').value;
-          const toTime = document.getElementById('toTime').value;
-          const ampm2 = document.getElementById('ampm2').value;
-
-          // Collect file data
-          const fileInput = document.getElementById('fileInput');
-          const file = fileInput.files[0];
-
-          // Create form data object
-          const formData = new FormData();
-          formData.append('fromDate', fromDate);
-          formData.append('fromTime', fromTime);
-          formData.append('ampm1', ampm1);
-          formData.append('toDate', toDate);
-          formData.append('toTime', toTime);
-          formData.append('ampm2', ampm2);
-          formData.append('file', file);
-
-          // Send POST request to backend
-          fetch('http://127.0.0.1:8000/home/', {
-              method: 'POST',
-              body: formData
-          })
-          .then(response => {
-              if (response.ok) {
-                  console.log('Data sent successfully');
-              } else {
-                  console.error('Failed to send data');
-              }
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          });
-      });
-  });
+            fetch('http://127.0.0.1:8000/home/upload/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
 </script>
 
 
@@ -148,5 +100,6 @@
 <script src="../static/JS/script.js"></script>
 <script src="../static/JS/scriptbutton.js"></script>
 <script src="../static/JS/scriptbutton2.js"></script>
+<script src="server.js"></script>
   </body>
 </html>
