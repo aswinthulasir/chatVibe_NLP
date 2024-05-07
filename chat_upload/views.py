@@ -25,6 +25,7 @@ class UploadViewSet(viewsets.ModelViewSet):
         print(queryset)
         print("hello world")
         input_file = queryset.values('chat_file','Name','chat_startdate','chat_enddate')
+        #if input file is not found return error
         if not input_file:
             return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
         else:
