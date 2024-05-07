@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/CSS/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="icon" href="Pics/favicon.jpg" type="image/x-icon">
+    <link rel="icon" href="../static/Pics/favicon.jpg" type="image/x-icon">
   </head>
   <body>
     <nav>
@@ -26,51 +26,35 @@
     </nav>
 
     <!-- Slideshow container -->
-<div class="slideshow-container">
-  
+    <h1 style="text-align: center; color: white; font-family: sans-serif; margin-top: 10%;">Upload the exported chat here</h1>
 
-  <!-- Full-width images with number and caption text -->
-  <div class="mySlides fade">
-    <div class="numbertext">1 / 3</div>
-    <img src="../static/Pics/car5.jpg" style="width:100%">
-    <div class="text">Texting with a touch of fire, when words are the flames of expression.<br>
-     
-    </div>
-  </div>
+    <label for="fileUpload">Upload File</label>
+    <input type="file" id="fileUpload" accept=".txt" style="display: none;">
 
-  <div class="mySlides fade">
-    <div class="numbertext">2 / 3</div>
-    <img src="../static/Pics/car3.jpg" style="width:100%">
-    <div class="text">In the world of happiness, every message is a smile waiting to happen.<br>
+    <br>
 
-    </div>
-  </div>
-
-  <div class="mySlides fade">
-    <div class="numbertext">3 / 3</div>
-    <img src="../static/Pics/car4.jpg" style="width:100%">
-    <div class="text">Behind every sad emoji, there's a story waiting to be heard.<br>
+    <div style="text-align: center; margin: 1%;">
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate">
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate">  
+    <label for="Name">Name:</label>
+    <input type="text" id="Name" placeholder="Enter the name here">
     
     </div>
-   
-  </div>
- 
-  <!-- Next and previous buttons -->
-  
-<div class="upload-overlay">
-  <input type="file" id="fileUpload" accept=".txt">
-    
+    <br>
 
-<div class="upload-overlay2">
-    <form class="time-input-form">
-      <label for="fromDate">From Date:</label>
-      <input type="date" id="fromDate">
-      <label for="toDate">To Date:</label>
-      <input type="date" id="toDate">
-      <br>
-      <button onclick="uploadFile()">Upload</button>
-<script>
-  function uploadFile() {
+    <button style=" padding: 12px 22px;
+     background-color: #075e54; 
+     cursor: pointer;border: none; 
+     outline: none; color: white; 
+     border-radius: 25px; display: block;  
+     opacity: 0.8; transition: 0.5s;
+     margin: 2% auto;
+     " onclick="uploadFile()">Submit</button>
+
+    <script>
+        function uploadFile() {
             const file = document.getElementById('fileUpload').files[0];
             const fromDate = document.getElementById('fromDate').value;
             const toDate = document.getElementById('toDate').value;
@@ -92,14 +76,8 @@
                 console.error(error);
             });
         }
-</script>
+    </script>
 
 
-
-
-<script src="../static/JS/script.js"></script>
-<script src="../static/JS/scriptbutton.js"></script>
-<script src="../static/JS/scriptbutton2.js"></script>
-<script src="server.js"></script>
   </body>
 </html>

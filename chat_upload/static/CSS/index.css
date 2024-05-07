@@ -194,6 +194,80 @@
   
 }
 
+label[for="fileUpload"] {
+  padding: 12px 22px;
+  background-color: #075e54;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  display: block;
+  opacity: 0.8;
+  transition: 0.5s;
+  text-align: center;
+  margin-top: 2%;
+  margin-inline: 1%;
+}
+
+/* Hide the "Name" text box initially */
+#Name {
+  display: none;
+}
+
+/* Style labels */
+label {
+  color: white; /* White text color */
+  margin-right: 10px; /* Add some space after the label */
+}
+
+/* Style date inputs */
+input[type="date"] {
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 20px; /* Rounded corners */
+  padding: 15px 25px; /* Padding for spacing */
+  background-color: transparent; /* Remove default background */
+  color: white; /* White text color */
+  /* Use Font Awesome icons (replace with desired classes) */
+  padding-right: 35px; /* Make space for icon */
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+/* Style date input for To Date */
+#toDate {
+  background-image: none; /* Remove previous background image */
+}
+
+.fa {
+  /* Font Awesome icon styles (adjust as needed) */
+  font-size: 18px; /* Adjust icon size */
+  color: white; /* White icon color */
+  position: absolute;
+  right: 10px; /* Position icon within the input */
+  top: 50%; /* Vertical centering */
+  transform: translateY(-50%); /* Vertical centering alignment */
+}
+
+#Name {
+  border: 1px solid white; /* White border */
+  border-radius: 20px; /* Rounded corners */
+  padding: 15px 25px; /* Padding for spacing */
+  background-color: transparent; /* Transparent background */
+  color: white; /* White text color */
+  display: inline-block; /* Make it inline */
+  margin-left: 1%;
+}
+
+/* Style placeholder text */
+#Name::placeholder {
+  color: white; /* White placeholder text */
+  opacity: 0.5; /* Lower opacity */
+}
+
+
+
+
 .upload-overlay {
   position: absolute;
   top: 77%;
