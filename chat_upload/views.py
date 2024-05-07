@@ -25,13 +25,13 @@ class UploadViewSet(viewsets.ModelViewSet):
         print(queryset)
         print("hello world")
         input_file = queryset.values('chat_file','Name','chat_startdate','chat_enddate')
-        file = input_file[0]['chat_file']
-        Name = input_file[0]['Name']
-        chat_startdate = input_file[0]['chat_startdate']
-        chat_enddate = input_file[0]['chat_enddate']
         if not input_file:
-             return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No file found"}, status=status.HTTP_400_BAD_REQUEST)
         else:
+            file = input_file[0]['chat_file']
+            Name = input_file[0]['Name']
+            chat_startdate = input_file[0]['chat_startdate']
+            chat_enddate = input_file[0]['chat_enddate']
             df = txt_df.text_to_df(file,Name,chat_startdate,chat_enddate)
             df1 = data_preprocess.preprocess_text(df)
             df2 = resultmodel.emotionlabel(df1)
