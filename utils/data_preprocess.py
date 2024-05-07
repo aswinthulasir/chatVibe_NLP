@@ -8,7 +8,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 # Download necessary resources (one-time setup)
 nltk.download('wordnet')
-import pandas as pd
+
 
 
 # Define a dictionary of chat word mappings
@@ -135,21 +135,19 @@ def remove_punctuation(text):
     # Replace all punctuation symbols with an empty string
     no_punct = ''.join([char for char in text if char not in punctuations])
     return no_punct
-df = pd.read_csv('data/opdata/chat.csv')
+#df = pd.read_csv('data/opdata/chat.csv')
 
 def preprocess_text(df):
     '''
-    args: df (pandas DataFrame): dataframe of the text file
+    args: df (pandas DataFrame): dataframe from text_to_df function
+    returns: df (pandas DataFrame): dataframe with preprocessed text
     '''
-    #df = pd.read_csv(csv_file)
-    #df = df.dropna()  # Drop rows with missing values
-
     # Apply remove_emojis function to 'Text' column
     df['Text'] = df['Text'].apply(remove_emojis)
      #Converting the text to lowercase
     df['Text'] = df['Text'].str.lower()
     #Removing the extra whitespaces
-    #df['text'] = df['text'].str.strip()
+    df['Text'] = df['Text'].str.strip()
 
      # Remove HTML tags from 'Text' column
     df['Text'] = df['Text'].apply(remove_html_tags)
@@ -176,7 +174,4 @@ def preprocess_text(df):
     #Apply lemmatisation
     df['Text_preprocess'] = df['Text_preprocess'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
   
-    df.to_csv('data/opdata/chat1.csv', index=False)
-    #print(df)
     return df
-preprocess_text(df)
