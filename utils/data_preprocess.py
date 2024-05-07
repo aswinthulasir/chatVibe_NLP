@@ -142,7 +142,6 @@ def preprocess_text(df):
     args: df (pandas DataFrame): dataframe from text_to_df function
     returns: df (pandas DataFrame): dataframe with preprocessed text
     '''
-
     # Apply remove_emojis function to 'Text' column
     df['Text'] = df['Text'].apply(remove_emojis)
      #Converting the text to lowercase

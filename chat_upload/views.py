@@ -32,11 +32,11 @@ class UploadViewSet(viewsets.ModelViewSet):
         else:
             df = txt_df.text_to_df(file,Name,chat_startdate,chat_enddate)
             df1 = data_preprocess.preprocess_text(df)
-            emotion = resultmodel.emotionlabel(df1)
+            df2 = resultmodel.emotionlabel(df1)
 
             #delete table row
             queryset.delete()
-            return Response(emotion, status=status.HTTP_200_OK)
+            return Response(df2, status=status.HTTP_200_OK)
         
     
 

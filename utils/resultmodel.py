@@ -1,9 +1,9 @@
 
 import pickle
-import pandas as pd
+#import pandas as pd
 import collections
-# df = pd.read_csv('data/dataset/new.csv')
-# df =df.dropna()
+#df = pd.read_csv('data/dataset/text2.csv')
+#df =df.dropna()
 
 def emotionlabel(df):
     #Load the model from the file
@@ -11,7 +11,7 @@ def emotionlabel(df):
         loaded_model = pickle.load(f)
     emotions = loaded_model.predict(df['Text_preprocess'])
     count = collections.Counter(emotions)
-    print(count)
+    #print(count)
     return count
 
 #emotionlabel(df)

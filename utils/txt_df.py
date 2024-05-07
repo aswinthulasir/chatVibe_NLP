@@ -16,11 +16,10 @@ def text_to_df(filename,Name ,chat_startdate,chat_enddate):
 
     #Loading the text file into a pandas DataFrame
     df=pd.read_csv(filename,header=None,on_bad_lines='warn',encoding='utf-8')
-
+    
     #Removing the rows containing the encryption pattern
     encryption_pattern = r"Messages and calls are end-to-end"
     df = df.drop(df[df[1].str.contains(encryption_pattern)].index)
-
     #Setting the column names
     df.columns=['Date','Time','Name','Text']
 
