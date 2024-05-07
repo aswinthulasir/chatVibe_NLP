@@ -54,15 +54,18 @@
      " onclick="uploadFile()">Submit</button>
 
     <script>
-        function uploadFile() {
+       function uploadFile() {
             const file = document.getElementById('fileUpload').files[0];
             const fromDate = document.getElementById('fromDate').value;
             const toDate = document.getElementById('toDate').value;
+            const Name = document.getElementById('Name').value;
 
             const formData = new FormData();
-            formData.append('file', file);
-            formData.append('fromDate', fromDate);
-            formData.append('toDate', toDate);
+            formData.append('chat_file', file);
+            formData.append('chat_startdate', fromDate);
+            formData.append('chat_enddate', toDate);
+            formData.append("Name", Name);
+
 
             fetch('http://127.0.0.1:8000/home/upload/', {
                 method: 'POST',
