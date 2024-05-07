@@ -11,7 +11,7 @@ X = df['Text_preprocess']
 y = df['label']
 
 # Split data into training and testing sets (optional, adjust test_size as needed)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=46)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Feature extraction (using TF-IDF in this example)
 vectorizer = TfidfVectorizer(max_features=1000)  # Hyperparameter: number of features

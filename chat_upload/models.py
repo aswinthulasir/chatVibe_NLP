@@ -6,9 +6,6 @@ class chat_upload(models.Model):
     chat_file = models.FileField(upload_to='data/ipdata/', blank=False)
     Name = models.CharField(max_length=100, null=True, blank=True)
     chat_startdate = models.DateField(null=True, blank=True)
-    chat_starttime = models.TimeField(null=True, blank=True)
     chat_enddate = models.DateField(null=True, blank=True)
-    chat_endtime = models.TimeField(null=True, blank=True)
-   # is_active = models.BooleanField(default=True)
     def __str__(self):
         return self.Name
