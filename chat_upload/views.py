@@ -8,7 +8,7 @@ from .models import chat_upload
 from .serializers import Uploadserializer
 from utils import data_preprocess,txt_df,resultmodel
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'index1.html')
 
 class UploadViewSet(viewsets.ModelViewSet):
     queryset = chat_upload.objects.all()
@@ -22,6 +22,8 @@ class UploadViewSet(viewsets.ModelViewSet):
     
     def list(self, request, *args, **kwargs):
         queryset = chat_upload.objects.all()
+        print(queryset)
+        print("hello world")
         input_file = queryset.values('chat_file','Name','chat_startdate','chat_enddate')
         file = input_file[0]['chat_file']
         Name = input_file[0]['Name']
