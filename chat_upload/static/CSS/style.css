@@ -304,3 +304,41 @@
   }
 
   
+
+
+
+
+
+
+
+
+
+
+
+  .pritext1{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  
+  .pritext1 button{
+    padding: 12px 22px;
+    margin-top: 30px;
+    font-size: 22px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #075e54;
+    border-radius: 25px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.5s;
+  }
+
+  .pritext1 button :hover{
+    opacity: 1;
+  }
+  

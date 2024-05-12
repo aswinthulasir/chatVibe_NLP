@@ -76,12 +76,17 @@
       top: 80px;
       left: -100%;
       text-align: center;
+      z-index: 4;
       transition: all .5s;
+    }
+    nav{
+      z-index: 4;
     }
     nav ul li{
       display: block;
       margin: 50px 0;
       line-height: 30px;
+      z-index: 4;
     }
     nav ul li a{
       font-size: 20px;
@@ -365,61 +370,41 @@ input[type="date"] {
 
 
 
-
-
-
-
-
-@media only screen and (max-width: 600px) {
-  .upload-overlay2 {
-    top: 50%; /* Adjust as needed */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000000; /* Change color to black on mobile */
-  }
-  
-  /* Style form elements */
-  .time-input-form {
-    display: flex;
-    flex-direction: column; /* Change to column layout on mobile */
-    padding: 20px;
-  }
-
-  .time-input-form label,
-  .time-input-form input,
-  .time-input-form select {
-    margin-bottom: 10px;
-    margin-left: 0; /* Remove left margin on mobile */
-    background-color: #ffffff00;
-    color: #ffffff;
-    border: none; 
-    outline: none;
-    width: 100%; /* Full width on mobile */
-  }
-
-  .time-input-form label {
-    font-size: large;
-    font-weight: 400;
-  }
-
-  .time-input-form input,
-  .time-input-form select {
-    padding: 10px;
-    box-sizing: border-box;
-    color: #ffffff;
-  }
-
-  .time-input-form option {
-    color: #000000; /* Set option text color to black */
-  }
-
-  .time-input-form input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Invert the color to white */
-  }
-  
-  .time-input-form input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Invert the color to white */
+@media only screen and (max-width: 768px) {
+  label,
+  input,
+  button {
+    display: block;
+    margin: 10px auto;
   }
 }
 
 
+
+
+/* Style for the default calendar icon */
+.white-calendar-icon::-webkit-calendar-picker-indicator {
+  filter: invert(100%); /* Invert the color to make it white */
+}
+
+
+
+#loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust height as needed */
+}
+
+#loading-animation span {
+  animation: blink 1s infinite alternate; /* Blink animation */
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
