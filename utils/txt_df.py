@@ -49,7 +49,8 @@ def text_to_df(filename,Name ,chat_startdate,chat_enddate):
     #Filtering the data based on the 'Name' column
     df =df[df['Name'] == Name]
     #Filtering the data range based on the 'Date' column 
-    df = df[ (df['Date'] >= chat_startdate) & (df['Date'] <= chat_enddate)]
+    if chat_startdate != None and chat_enddate != None:
+      df = df[ (df['Date'] >= chat_startdate) & (df['Date'] <= chat_enddate)]
 
     #No files are saed internally so we delete the file after reading it
     os.remove(filename)
