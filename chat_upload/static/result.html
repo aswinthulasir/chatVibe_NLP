@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  
+
+  <head>
+    <meta charset="utf-8">
+    <title>ChatVibe-Worlds First WhatsApp Mood Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/CSS/index.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
+    <link rel="icon" href="../static/Pics/favicon.jpg" type="image/x-icon">
+
+    <style>
+        /* Add your custom CSS styles here */
+        .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 2vh;
+          height: 50vh;
+          width: auto;
+        }
+        .pie-chart-container {
+          width: 50%;
+        }
+        .result-container {
+          width: 45%;
+        }
+      </style>
+
+  </head>
+  <body>
+    <nav>
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <label class="logo">ChatVibe</label>
+     
+    </nav>
+
+
+    <h1 style="text-align: center; text-decoration: none; color: white; padding: 0 auto; margin-top: 1.5%; font-size: 2rem;">Result</h1>
+
+    <div class="container">
+        <div class="pie-chart-container">
+          <canvas id="pie-chart"></canvas>
+        </div>
+        <div class="result-container">
+          <p id="result-text">Result will be displayed here</p>
+        </div>
+      </div>
+    
+
+
+    <div class="pritext1">
+        <button id="redirectButton">Go Back</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script src="JS/scriptbutton.js"></script>
+
+        <script>
+            // JavaScript code for fetching data and updating the chart and result
+            fetch('http://127.0.0.1:8000/home/upload/')
+              .then(response => response.json())
+              .then(data => {
+                const resultData = data.result.split(',');
+                const result = resultData[0].trim();
+                const numericalValue = parseInt(resultData[1].trim());
+        
+                // Update result text
+                document.getElementById('result-text').innerText = `Result: ${result}`;
+        
+                // Update pie chart
+                const ctx = document.getElementById('pie-chart').getContext('2d');
+                const pieChart = new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: ['Fear', 'Anger', 'Joy', 'Trust', 'Anticipation', 'Disgust', 'Sadness', 'Surprise'],
+                    datasets: [{
+                      data: [0, 0, 0, 0, 0, 0, 0, 0], // Initialize all values to 0
+                      backgroundColor: [
+                        '#FF5733', '#FFD700', '#00FF00', '#008080', '#800080', '#800000', '#0000FF', '#FF00FF' // Add your desired colors here
+                      ]
+                    }]
+                  },
+                  options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                  }
+                });
+        
+                // Update the size of the corresponding section
+                if (['Fear', 'Anger', 'Joy', 'Trust', 'Anticipation', 'Disgust', 'Sadness', 'Surprise'].includes(result)) {
+                  const index = ['Fear', 'Anger', 'Joy', 'Trust', 'Anticipation', 'Disgust', 'Sadness', 'Surprise'].indexOf(result);
+                  pieChart.data.datasets[0].data[index] = numericalValue;
+                }
+                pieChart.update();
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+          </script>
+
+
+   
+
+  </body>
+  </html>

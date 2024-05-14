@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
+
+  
+
   <head>
     <meta charset="utf-8">
     <title>ChatVibe-Worlds First WhatsApp Mood Analyzer</title>
@@ -25,6 +28,8 @@
       </ul>
     </nav>
 
+
+
     <!-- Slideshow container -->
     <h1 style="text-align: center; color: white; font-family: sans-serif; margin-top: 10%;">Upload the exported chat here</h1>
 
@@ -35,9 +40,9 @@
 
     <div style="text-align: center; margin: 1%;">
     <label for="fromDate">From Date:</label>
-    <input type="date" id="fromDate">
-    <label for="toDate">To Date:</label>
-    <input type="date" id="toDate">  
+    <input type="date" id="fromDate" class="white-calendar-icon">
+    <label for="toDate" >To Date:</label>
+    <input type="date" id="toDate" class="white-calendar-icon">  
     <label for="Name">Name:</label>
     <input type="text" id="Name" placeholder="Enter the name here">
     
@@ -52,6 +57,15 @@
      opacity: 0.8; transition: 0.5s;
      margin: 2% auto;
      " onclick="uploadFile()">Submit</button>
+
+
+
+
+<div id="loading-animation" style="display: none;">
+  <!-- Add your loading animation here -->
+  <span>Loading...</span>
+</div>
+
 
     <script>
        function uploadFile() {
@@ -79,6 +93,17 @@
                 console.error(error);
             });
         }
+
+        function uploadFile(){
+      // Display loading animation
+      document.getElementById('loading-animation').style.display = 'block';
+
+      // Wait for 3 seconds and then redirect to result.html
+      setTimeout(function() {
+        window.location.href = '../static/result.html'; // Redirect to result.html after 3 seconds
+      }, 3000); // 3000 milliseconds = 3 seconds
+    }
+
     </script>
 
 

@@ -1,4 +1,4 @@
 document.getElementById('redirectButton').addEventListener('click', function() {
         
-    window.location.href = 'index.html';
+    window.location.href = '../templates/index.html';
   });
