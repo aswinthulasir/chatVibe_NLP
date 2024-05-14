@@ -7,7 +7,7 @@ import collections
 
 def emotionlabel(df):
     #Load the model from the file
-    with open('data/trainedmodels/pipe.pickle', 'rb') as f:
+    with open('data/trainedmodels/accuratemodel.pickle', 'rb') as f:
         loaded_model = pickle.load(f)
     emotions = loaded_model.predict(df['Text_preprocess'])
     count = collections.Counter(emotions)
