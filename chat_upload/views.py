@@ -6,7 +6,7 @@ from rest_framework import status
 # Create your views here.
 from .models import chat_upload
 from .serializers import Uploadserializer
-from utils import data_preprocess,txt_df,resultmodel
+from utils import data_preprocess,txt_df,resultmodel ,patterncsv
 def home(request):
     return render(request, 'index.html')
 
@@ -33,7 +33,8 @@ class UploadViewSet(viewsets.ModelViewSet):
             Name = input_file[0]['Name']
             chat_startdate = input_file[0]['chat_startdate']
             chat_enddate = input_file[0]['chat_enddate']
-            df = txt_df.text_to_df(file,Name,chat_startdate,chat_enddate)
+            #df = txt_df.text_to_df(file,Name,chat_startdate,chat_enddate)
+            df = patterncsv.preprocess(file,Name,chat_startdate,chat_enddate)
             df1 = data_preprocess.preprocess_text(df)
             df2 = resultmodel.emotionlabel(df1)
 

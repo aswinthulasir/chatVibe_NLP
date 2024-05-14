@@ -11,7 +11,8 @@ def emotionlabel(df):
         loaded_model = pickle.load(f)
     emotions = loaded_model.predict(df['Text_preprocess'])
     count = collections.Counter(emotions)
-    #print(count)
-    return count
+    most_frequent = count.most_common(1)[0][0]  
+    #print(most_frequent)
+    return most_frequent
 
 #emotionlabel(df)
