@@ -52,7 +52,7 @@ def text_to_df(filename,Name ,chat_startdate,chat_enddate):
     if chat_startdate != None and chat_enddate != None:
       df = df[ (df['Date'] >= chat_startdate) & (df['Date'] <= chat_enddate)]
 
-    #No files are saed internally so we delete the file after reading it
+    #No files are saved internally so we delete the file after reading it
     os.remove(filename)
     return df
 
