@@ -8,7 +8,7 @@ from .models import chat_upload
 from .serializers import Uploadserializer
 from utils import data_preprocess,txt_df,resultmodel
 def home(request):
-    return render(request, 'index1.html')
+    return render(request, 'index.html')
 
 class UploadViewSet(viewsets.ModelViewSet):
     queryset = chat_upload.objects.all()
