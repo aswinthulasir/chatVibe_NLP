@@ -88,6 +88,7 @@
             .then(response => response.text())
             .then(data => {
                 console.log(data);
+                window.location.href = 'http://127.0.0.1:8000/home/';
             })
             .catch(error => {
                 console.error(error);
@@ -100,7 +101,7 @@
 
          // Retrieve the result immediately after receiving it
          fetch('http://127.0.0.1:8000/home/upload/', {
-        method: 'GET'
+            method: 'GET'
     })
     .then(response => response.text())
     .then(result => {
