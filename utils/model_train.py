@@ -19,7 +19,7 @@ X_train_features = vectorizer.fit_transform(X_train)
 X_test_features = vectorizer.transform(X_test)
 
 # Model training 
-model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.01, max_depth=3)
+model = GradientBoostingClassifier(n_estimators=5000, learning_rate=0.05, max_depth=3 , max_features='log2',verbose=1)
 
 time1 = time.time()
 
