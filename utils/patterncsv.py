@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import os
 
 def preprocess(filename,personname ,chat_startdate,chat_enddate):
     #Converting the date to datetime format
@@ -62,6 +63,8 @@ def preprocess(filename,personname ,chat_startdate,chat_enddate):
     df =df[df['Name'] == personname]
     #print(df)
     #df.to_csv('data/textdata/Abhi_Niyamasabha.csv')
+    #No files are saved internally so we delete the file after reading it
+    os.remove(filename)
     return df
 #file = 'data/textdata/Abhi_Niyamasabha.txt'
 #Name = 'Abhi Niyamasabha'
