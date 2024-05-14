@@ -94,15 +94,24 @@
             });
         }
 
-        function uploadFile(){
-      // Display loading animation
-      document.getElementById('loading-animation').style.display = 'block';
 
-      // Wait for 3 seconds and then redirect to result.html
-      setTimeout(function() {
-        window.location.href = '../static/result.html'; // Redirect to result.html after 3 seconds
-      }, 3000); // 3000 milliseconds = 3 seconds
-    }
+
+
+
+         // Retrieve the result immediately after receiving it
+         fetch('http://127.0.0.1:8000/home/result/', {
+        method: 'GET'
+    })
+    .then(response => response.text())
+    .then(result => {
+        // Display the result in another dialogue box
+        alert('Result: ' + result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+       
 
     </script>
 
